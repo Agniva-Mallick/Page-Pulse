@@ -37,13 +37,16 @@ def parse_html_content(html_content: str) -> dict:
     images_missing_alt = sum(1 for img in images if not img.get("alt") or not img.get("alt").strip())
     
     # 5. Approximate word count
-    # Remove script and style elements before counting words
-    for script_or_style in soup(["script", "style", "noscript"]):
-        script_or_style.decompose()
-        
-    text = soup.get_text(separator=' ')
-    words = text.split()
-    word_count = len(words)
+    # Get text from body only if it exists, to avoid counting head elements like title
+    word_count = 0
+    if soup.body:
+        # Remove script and style elements before counting words
+        for script_or_style in soup.body(["script", "style", "noscript"]):
+            script_or_style.decompose()
+            
+        text = soup.body.get_text(separator=' ')
+        words = text.split()
+        word_count = len(words)
     
     return {
         "page_title": title,
