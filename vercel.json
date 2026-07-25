@@ -1,5 +1,4 @@
 {
-  "framework": null,
   "cleanUrls": true,
   "rewrites": [
     { "source": "/api/audit", "destination": "/api/index.py" }
