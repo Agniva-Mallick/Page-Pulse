@@ -35,12 +35,8 @@ document.addEventListener('DOMContentLoaded', () => {
         loader.style.display = 'block';
 
         try {
-            // Determine API base URL (works locally and in production on Vercel)
-            const apiBase = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
-                ? 'http://localhost:8000' 
-                : '';
-                
-            const response = await fetch(`${apiBase}/api/audit?url=${encodeURIComponent(url)}`);
+            // Use relative path - works on both localhost and Vercel
+            const response = await fetch(`/api/audit?url=${encodeURIComponent(url)}`);
             const data = await response.json();
 
             if (!response.ok) {
